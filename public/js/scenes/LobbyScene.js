@@ -139,6 +139,7 @@ class LobbyScene extends Phaser.Scene {
 
       if (event.key === 'Backspace') {
         this.roomCodeInput = this.roomCodeInput.slice(0, -1);
+        this.updateUI();
       } else if (event.key === 'Enter' && this.roomCodeInput.length === 6) {
         networkManager.joinRoom(this.roomCodeInput);
         this.statusText.setText('Joining...').setColor('#aaaaff');
@@ -146,9 +147,24 @@ class LobbyScene extends Phaser.Scene {
         const char = event.key.toUpperCase();
         if (/[A-Z0-9]/.test(char)) {
           this.roomCodeInput += char;
+          this.updateUI();
         }
       }
-      this.updateUI();
+    });
+
+    // Paste support (Cmd+V / Ctrl+V)
+    this.game.canvas.addEventListener('paste', (event) => {
+      if (this.lobbyState !== 'joining') return;
+      const pasted = (event.clipboardData || window.clipboardData).getData('text').trim().toUpperCase();
+      const clean = pasted.replace(/[^A-Z0-9]/g, '').slice(0, 6);
+      if (clean.length > 0) {
+        this.roomCodeInput = clean;
+        this.updateUI();
+        if (this.roomCodeInput.length === 6) {
+          networkManager.joinRoom(this.roomCodeInput);
+          this.statusText.setText('Joining...').setColor('#aaaaff');
+        }
+      }
     });
   }
 
