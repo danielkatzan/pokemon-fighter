@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pokemon Fighter</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="game-container"></div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/phaser@3.60.0/dist/phaser.min.js"></script>
+
+  <!-- Network -->
+  <script src="js/network/NetworkManager.js"></script>
+
+  <!-- Effects -->
+  <script src="js/effects/Effects.js"></script>
+
+  <!-- UI -->
+  <script src="js/ui/HUD.js"></script>
+
+  <!-- Fighters -->
+  <script src="js/fighters/Fighter.js"></script>
+  <script src="js/fighters/Pikachu.js"></script>
+  <script src="js/fighters/Charmander.js"></script>
+  <script src="js/fighters/Bulbasaur.js"></script>
+  <script src="js/fighters/Squirtle.js"></script>
+  <script src="js/fighters/Togepi.js"></script>
+
+  <!-- AI -->
+  <script src="js/ai/AIController.js"></script>
+
+  <!-- Scenes -->
+  <script src="js/scenes/BootScene.js"></script>
+  <script src="js/scenes/MenuScene.js"></script>
+  <script src="js/scenes/LobbyScene.js"></script>
+  <script src="js/scenes/CharSelectScene.js"></script>
+  <script src="js/scenes/FightScene.js"></script>
+  <script src="js/scenes/GameOverScene.js"></script>
+
+  <!-- Main -->
+  <script src="js/main.js"></script>
+</body>
+</html>
