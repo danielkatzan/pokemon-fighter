@@ -193,7 +193,7 @@ class CharSelectScene extends Phaser.Scene {
     const zone = this.add.zone(x, y, cardWidth, cardHeight).setInteractive({ useHandCursor: true });
     zone.on('pointerdown', () => {
       if (this.gameMode === 'online') {
-        if (!this.myReady()) return;
+        if (this.myReady()) return;
         this.myCursor = index;
         this.confirmMySelection(index);
       } else {

@@ -61,9 +61,34 @@ class LobbyScene extends Phaser.Scene {
       stroke: '#000000',
       strokeThickness: 4,
       letterSpacing: 8
+    }).setOrigin(0.5).setInteractive({ useHandCursor: true });
+
+    this.roomCodeDisplay.on('pointerdown', () => {
+      if (this.roomCode) {
+        navigator.clipboard.writeText(this.roomCode).then(() => {
+          this.copiedText.setText('Copied!');
+          this.time.delayedCall(1500, () => {
+            if (this.copiedText) this.copiedText.setText('');
+          });
+        });
+      }
+    });
+    this.roomCodeDisplay.on('pointerover', () => {
+      if (this.lobbyState === 'waiting') {
+        this.roomCodeDisplay.setColor('#ffffff');
+      }
+    });
+    this.roomCodeDisplay.on('pointerout', () => {
+      this.roomCodeDisplay.setColor('#ffcc00');
+    });
+
+    this.copiedText = this.add.text(width / 2, 348, '', {
+      fontSize: '13px',
+      fontFamily: 'Arial',
+      color: '#44cc44'
     }).setOrigin(0.5);
 
-    this.inputHint = this.add.text(width / 2, 360, '', {
+    this.inputHint = this.add.text(width / 2, 368, '', {
       fontSize: '14px',
       fontFamily: 'Arial',
       color: '#888888'
@@ -139,7 +164,7 @@ class LobbyScene extends Phaser.Scene {
       case 'waiting':
         this.statusText.setText('Waiting for opponent' + dots);
         this.roomCodeDisplay.setText(this.roomCode || '');
-        this.inputHint.setText('Share this code with your opponent');
+        this.inputHint.setText('Click code to copy \u2022 Share with your opponent');
         break;
       case 'joining':
         this.statusText.setText('Enter room code:');
