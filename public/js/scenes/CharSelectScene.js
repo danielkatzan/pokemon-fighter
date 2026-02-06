@@ -153,12 +153,6 @@ class CharSelectScene extends Phaser.Scene {
           this.startCountdown();
         }
       });
-
-      // In online mode, server controls the timing — countdown is visual only.
-      // game_start is the authoritative signal to launch.
-      networkManager.on('game_start', (data) => {
-        this.launchFight();
-      });
     }
 
     this.updateSelection();
@@ -410,23 +404,18 @@ class CharSelectScene extends Phaser.Scene {
             duration: 400,
             onComplete: () => {
               countdown.destroy();
-              // In online mode, wait for game_start from server.
-              // In local modes, launch directly.
-              if (this.gameMode !== 'online') {
-                this.launchFight();
-              }
+              this.launchFight();
             }
           });
         }
       },
-      repeat: 3
+      repeat: 2
     });
   }
 
   cleanupOnlineHandlers() {
     networkManager.off('opponent_selected');
     networkManager.off('both_ready');
-    networkManager.off('game_start');
   }
 
   launchFight() {
